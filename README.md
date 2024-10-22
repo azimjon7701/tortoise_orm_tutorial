@@ -220,3 +220,11 @@ aerich init-db -c orm_config.toml
 ```
 
 Bu buyruq mavjud modellarga asoslangan holda dastlabki migratsiyalarni yaratadi va migrations folderiga saqlaydi.
+
+**Eslatma:** *faqat birinchi marta migrationlarni yaratish
+uchun* `init-db` *buyrug'i ishlatiladi. Bu buyruq natijasida migrationlar yaratilib ma'lumotlar bazasida jadvallar
+yaratiladi. Agar bu buyruq ishlatilganidan keyin modellarda biror o'zgarish amalga oshirilmasa boshqa buyruqlarni ishga
+tushurish kerak emas.*
+
+
+  
