@@ -8,6 +8,7 @@ class User(Model):
     email = fields.CharField(max_length=100)
     bio = fields.CharField(max_length=255, null=True)
     is_active = fields.BooleanField(default=True)
+    password = fields.CharField(max_length=255, null=True)  # yangi field
 
     class Meta:
         table = "users"  # table_name

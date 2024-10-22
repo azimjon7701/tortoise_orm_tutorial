@@ -226,12 +226,41 @@ uchun* `init-db` *buyrug'i ishlatiladi. Bu buyruq natijasida migrationlar yarati
 yaratiladi. Agar bu buyruq ishlatilganidan keyin modellarda biror o'zgarish amalga oshirilmasa boshqa buyruqlarni ishga
 tushurish kerak emas.*
 
-
 ### Modellarni o'zgartirish va yangi migratsiyalar yaratish
 
 Masalan `User` modelga yangi field qo'shamiz:
 
-`models.py`: 
+`models.py`:
+
 ```python 
+from tortoise import fields
+from tortoise.models import Model
+
+
+class User(Model):
+    id = fields.IntField(pk=True)
+    username = fields.CharField(max_length=50, unique=True)
+    email = fields.CharField(max_length=100)
+    bio = fields.CharField(max_length=255, null=True)
+    is_active = fields.BooleanField(default=True)
+    password = fields.CharField(max_length=255, null=True)  # yangi field
+
+    class Meta:
+        table = "users"  # table_name
+```
+
+Endi migratsiyani yaratish uchun quyidagi buyruqni ishlating:
 
 ```
+aerich -c pyproject.toml migrate
+```
+
+**Eslatma:** `migrate` *buyrug'i* `django`*dagi* `makemigrations` *bilan ekvivalent.*
+
+Hosil bo'lgan migratsiyani ma'lumotlar bazasiga tadbiq qilish uchun quyidagi buyruqni ishlating:
+
+```
+aerich -c pyproject.toml upgrade
+```
+
+**Eslatma:** `upgrade` *buyrug'i* `django`*dagi* `migrate` *bilan ekvivalent.*
