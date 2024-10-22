@@ -264,3 +264,65 @@ aerich -c pyproject.toml upgrade
 ```
 
 **Eslatma:** `upgrade` *buyrug'i* `django`*dagi* `migrate` *bilan ekvivalent.*
+
+# Tortoise ORM bilan ishlash
+## Ma'lumotlar bazasiga ulanishi
+Endi init_db funksiyasini yaratamiz, unda Tortoise ORM ulanishini sozlaymiz:
+```python
+import asyncio
+
+from tortoise import Tortoise
+
+from models import User
+from settings import ORM_CREDENTIALS
+
+
+async def init_db():
+    await Tortoise.init(config=ORM_CREDENTIALS)
+
+
+async def create_user(username: str, email: str):
+    user = await User.create(username=username, email=email)
+    return user
+
+
+async def get_user(user_id: int):
+    user = await User.get(id=user_id)
+    return user
+
+
+async def update_user(user_id: int, username: str = None, email: str = None):
+    user = await User.get(id=user_id)
+    if username:
+        user.username = username
+    if email:
+        user.email = email
+    await user.save()
+    return user
+
+
+async def delete_user(user_id: int):
+    user = await User.get(id=user_id)
+    await user.delete()
+
+
+async def main():
+    await init_db() # har doim orm ishlashi uchun eng birinchi Tortoise.init qilish kerak
+    new_user = await create_user(username="admin", email="admin@example.com")
+    print(f"Yaratilgan foydalanuvchi: {new_user}")
+    user = await get_user(new_user.id)
+    print(f"Olingan foydalanuvchi: {user}")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+
+```
+
+- `init_db()` - Bu funksiya Tortoise ORM bilan ma'lumotlar bazasiga ulanishni tashkil qiladi.
+  - `Tortoise.init(config=ORM_CREDENTIALS)`: `Tortoise.init()` funksiyasi orqali ORM konfiguratsiyasi yuklanadi va ma'lumotlar bazasi bilan ulanish tashkil etiladi. Bu konfiguratsiya faylda keltirilgan `ORM_CREDENTIALS` dan olinadi.
+  - Nima uchun kerak?: Barcha ORM operatsiyalarini bajarishdan oldin har doim ma'lumotlar bazasi bilan ulanishni sozlash kerak. Bu holda Tortoise ORM har qanday CRUD operatsiyalarini bajara oladi.
+  
+- `create_user()` - Foydalanuvchi yaratish uchun ishlatiladi.
+  - `User.create()`: Bu metod `User` modelida yangi yozuv yaratadi. `username` va `email` maydonlari orqali yangi foydalanuvchi qo'shiladi.
+  - **Asinxron**: Funksiya asinxron tarzda ishlaydi, ya'ni `await` yordamida ma'lumotlar bazasiga so'rov jo'natiladi va natijani kutib olinadi. Shu bilan birga, boshqa ishlar ham davom etadi.
