@@ -216,7 +216,7 @@ Bu konfiguratsiya Tortoise ORM va Aerich migratsiya joylashuvlarini boshqarish u
 Endi dastlabki migratsiyalarni yaratish uchun, quyidagi buyruqni ishlating:
 
 ```bash
-aerich init-db -c orm_config.toml
+aerich -c pyproject.toml init-db
 ```
 
 Bu buyruq mavjud modellarga asoslangan holda dastlabki migratsiyalarni yaratadi va migrations folderiga saqlaydi.
@@ -227,4 +227,11 @@ yaratiladi. Agar bu buyruq ishlatilganidan keyin modellarda biror o'zgarish amal
 tushurish kerak emas.*
 
 
-  
+### Modellarni o'zgartirish va yangi migratsiyalar yaratish
+
+Masalan `User` modelga yangi field qo'shamiz:
+
+`models.py`: 
+```python 
+
+```
