@@ -216,7 +216,7 @@ Bu konfiguratsiya Tortoise ORM va Aerich migratsiya joylashuvlarini boshqarish u
 Endi dastlabki migratsiyalarni yaratish uchun, quyidagi buyruqni ishlating:
 
 ```bash
-aerich -c pyproject.toml init-db
+aerich init-db
 ```
 
 Bu buyruq mavjud modellarga asoslangan holda dastlabki migratsiyalarni yaratadi va migrations folderiga saqlaydi.
@@ -252,7 +252,7 @@ class User(Model):
 Endi migratsiyani yaratish uchun quyidagi buyruqni ishlating:
 
 ```
-aerich -c pyproject.toml migrate
+aerich migrate
 ```
 
 **Eslatma:** `migrate` *buyrug'i* `django`*dagi* `makemigrations` *bilan ekvivalent.*
@@ -260,7 +260,7 @@ aerich -c pyproject.toml migrate
 Hosil bo'lgan migratsiyani ma'lumotlar bazasiga tadbiq qilish uchun quyidagi buyruqni ishlating:
 
 ```
-aerich -c pyproject.toml upgrade
+aerich upgrade
 ```
 
 **Eslatma:** `upgrade` *buyrug'i* `django`*dagi* `migrate` *bilan ekvivalent.*
